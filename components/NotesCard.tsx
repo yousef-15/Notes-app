@@ -4,62 +4,41 @@ import { Notes } from "@/constants/notes";
 import { Colors } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import NoteIcon from "./NoteIcon";
+import PinnedIcon from "./PinnedIcon";
 
 export default function NotesCard({ noteDetails }: { noteDetails: Notes }) {
   return (
     <Pressable
-      style={{
+      style={({ pressed }) => ({
         width: 180,
         height: 220,
         borderRadius: 10,
-        backgroundColor: "#171b21be",
+        backgroundColor: pressed ? "#1d232b" : "#171b21be",
         paddingVertical: 10,
         paddingHorizontal: 10,
-      }}
+        transform: [{ scale: pressed ? 0.98 : 1 }],
+        borderWidth: 1,
+        borderColor: "rgba(255,255,255,0.06)",
+      })}
       onPress={() => router.push(`/notes/${noteDetails.id}`)}
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <View
-          style={{
-            width: 35,
-            height: 35,
-            borderRadius: 5,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "rgba(34,197,94,0.1)",
-            marginBottom: 8,
-          }}
-        >
-          <Ionicons
-            size={22}
-            name={noteDetails.icon}
-            color="rgba(34,197,94,0.6)"
-          />
+        <View style={{ marginBottom: 8 }}>
+          <NoteIcon noteIcon={noteDetails.icon} />
         </View>
-        {noteDetails?.pinned && (
-          <View
-            style={{
-              width: 35,
-              height: 35,
-              borderRadius: 5,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(251,191,36,0.12)",
-            }}
-          >
-            <Ionicons size={21} name="pin" color="#FBBF24" />
-          </View>
-        )}
+        {noteDetails?.pinned && <PinnedIcon />}
       </View>
       <Text
-        style={{ color: Colors.dark.text, fontWeight: "900", marginBottom: 5 }}
+        style={{ color: Colors.dark.text, fontWeight: "700", marginBottom: 5 }}
+        numberOfLines={2}
       >
         {noteDetails.title}
       </Text>
       <Text
         style={{
           color: Colors.dark.disabledText,
-          fontWeight: "900",
+          fontWeight: "500",
           marginBottom: 10,
           fontSize: 12,
         }}
@@ -69,7 +48,7 @@ export default function NotesCard({ noteDetails }: { noteDetails: Notes }) {
       <Text
         style={{
           color: Colors.dark.placeholderText,
-          fontWeight: "900",
+          fontWeight: "400",
           fontSize: 12,
           flex: 1,
         }}
