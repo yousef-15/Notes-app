@@ -9,6 +9,7 @@ import { Colors } from "@/constants/theme";
 import { useNotes } from "@/context/NotesContext";
 import { styles } from "@/styles/styles";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
 import {
   Platform,
   StyleSheet,
@@ -37,6 +38,12 @@ const categories = [
 
 export default function HomeScreen() {
   const { notes } = useNotes();
+  const [search, setSearch] = useState("");
+
+  const filteredNotes = notes.filter((note: any) =>
+    note.title.toLowerCase().includes(search.toLowerCase()),
+  );
+  const notesToShow = filteredNotes.length > 0 ? filteredNotes : notes;
   return (
     <>
       <SafeAreaView
@@ -45,7 +52,7 @@ export default function HomeScreen() {
         <ScrollView>
           <View style={styles.outerContainer}>
             <GreetingHeader />
-            <SearchBar />
+            <SearchBar search={search} setSearch={setSearch} />
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -58,7 +65,7 @@ export default function HomeScreen() {
             </View>
           </View>
           <View style={{ flexDirection: "row", gap: 20, flexWrap: "wrap" }}>
-            {notes.map((note: any) => (
+            {notesToShow.map((note: any) => (
               <NotesCard key={note.id} noteDetails={note} />
             ))}
           </View>
