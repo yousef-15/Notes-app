@@ -16,6 +16,7 @@ export default function Categories({ categoryName }: { categoryName: string }) {
         borderWidth: 1,
         borderColor: "rgba(255,255,255,0.06)",
         transform: [{ scale: pressed ? 0.98 : 1 }],
+        marginRight: 8,
       })}
     >
       <Text

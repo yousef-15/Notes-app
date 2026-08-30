@@ -17,8 +17,12 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  const addNote = (note: Notes) => {
+    setNotes((prev) => [...prev, note]);
+  };
+
   return (
-    <NotesContext.Provider value={{ notes, togglePinned }}>
+    <NotesContext.Provider value={{ notes, togglePinned, addNote }}>
       {children}
     </NotesContext.Provider>
   );
