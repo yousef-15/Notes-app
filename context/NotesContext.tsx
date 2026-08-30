@@ -20,9 +20,13 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
   const addNote = (note: Notes) => {
     setNotes((prev) => [...prev, note]);
   };
+  const deleteNote = (id: number) => {
+    const notesAfterDeletion = initialNotes.filter((note) => note.id !== id);
+    setNotes(notesAfterDeletion);
+  };
 
   return (
-    <NotesContext.Provider value={{ notes, togglePinned, addNote }}>
+    <NotesContext.Provider value={{ notes, togglePinned, addNote, deleteNote }}>
       {children}
     </NotesContext.Provider>
   );

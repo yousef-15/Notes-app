@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NotesDetails() {
   const { id } = useLocalSearchParams();
-  const { notes, togglePinned } = useNotes();
+  const { notes, togglePinned, deleteNote } = useNotes();
   const note = notes.find((n: any) => n.id === Number(id));
   return (
     <SafeAreaView
@@ -213,6 +213,10 @@ export default function NotesDetails() {
       </ScrollView>
 
       <Pressable
+        onPress={() => {
+          deleteNote(id);
+          router.back();
+        }}
         style={{
           flexDirection: "row",
           gap: 12,
