@@ -53,16 +53,16 @@ export default function DropDownMenu({
           >
             {categories.map((item) => (
               <Pressable
-                key={item.category}
+                key={item.name}
                 onPress={() => {
-                  setCategory(item.category);
+                  setCategory(item.name);
                   setIsOpen(false);
                 }}
                 style={{
                   padding: 15,
                 }}
               >
-                <Text style={{ color: Colors.dark.text }}>{item.category}</Text>
+                <Text style={{ color: Colors.dark.text }}>{item.name}</Text>
               </Pressable>
             ))}
           </View>

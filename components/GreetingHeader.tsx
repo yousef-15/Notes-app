@@ -56,7 +56,6 @@ export default function GreetingHeader() {
     <View style={styles.headerContainer}>
       <View>
         <Text style={styles.text}>{greetingMessage}</Text>
-        <Text style={styles.text}>{data.name}</Text>
       </View>
       <View style={styles.dateContainer}>
         <Text style={styles.day}>{days[day]}</Text>

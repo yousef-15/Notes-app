@@ -5,7 +5,17 @@ export interface Notes {
   title: string;
   time: string;
   description: string;
-  icon: keyof typeof Ionicons.glyphMap;
   pinned: boolean;
-  category: string;
+  category: notesCategory;
+}
+
+interface notesCategory {
+  name: string;
+  icon: keyof typeof Ionicons.glyphMap;
+}
+
+export interface category {
+  name: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  color: string;
 }

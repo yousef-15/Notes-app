@@ -22,6 +22,10 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="notes/[id]" options={{ headerShown: false }} />
           <Stack.Screen name="notes/addNote" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="category/[name]"
+            options={{ headerShown: false }}
+          />
         </Stack>
         <StatusBar style="auto" />
       </NotesProvider>

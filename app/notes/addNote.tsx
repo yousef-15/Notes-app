@@ -1,32 +1,51 @@
-import { View, Text, Pressable, TextInput } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/theme";
-import { router } from "expo-router";
 import DropDownMenu from "@/components/DropDownMenu";
-import { Notes } from "@/constants/notes";
-import Pinned from "../(tabs)/pinned";
 import { categories } from "@/constants/notesData";
+import { Colors } from "@/constants/theme";
 import { useNotes } from "@/context/NotesContext";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import React, { useState } from "react";
+import { Pressable, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function addNote() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Personal");
   const [description, setDescription] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [errors, setErrors] = useState({ title: "", description: "" });
   const { addNote } = useNotes();
   const iconName = categories.find(
-    (n) => n.category.toLowerCase() === category.toLowerCase(),
+    (n) => n.name.toLowerCase() === category.toLowerCase(),
   )?.icon;
-  const newNote = {
-    id: Date.now(),
-    title,
-    description,
-    category: category,
-    time: new Date().toLocaleTimeString(),
-    icon: iconName,
-    pinned: false,
+
+  const handleSave = () => {
+    const newErrors = { title: "", description: "" };
+    if (!title.trim()) newErrors.title = "Title is required.";
+    if (!description.trim()) newErrors.description = "Description is required.";
+    if (newErrors.title || newErrors.description) {
+      setErrors(newErrors);
+      return;
+    }
+    addNote({
+      id: Date.now(),
+      title,
+      description,
+      category: { name: category, icon: iconName },
+      time:
+        new Date().toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }) +
+        " · " +
+        new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      pinned: false,
+    });
+    router.back();
   };
   return (
     <SafeAreaView
@@ -58,11 +77,7 @@ export default function addNote() {
           />
         </Pressable>
         <Pressable
-          onPress={() => {
-            addNote(newNote);
-            router.back();
-            // console.log(iconName);
-          }}
+          onPress={handleSave}
           style={({ pressed }) => ({
             borderRadius: 18,
             justifyContent: "center",
@@ -81,16 +96,33 @@ export default function addNote() {
       <View style={{ marginBottom: 20 }}>
         <TextInput
           value={title}
-          onChangeText={setTitle}
+          onChangeText={(val) => {
+            setTitle(val);
+            if (errors.title) setErrors((e) => ({ ...e, title: "" }));
+          }}
           placeholder="Note Title"
           style={{
             color: Colors.dark.text,
             fontSize: 25,
-            borderBottomColor: "rgba(255,255,255,0.07)",
+            borderBottomColor: errors.title
+              ? "rgba(239,68,68,0.8)"
+              : "rgba(255,255,255,0.07)",
             borderBottomWidth: 1,
           }}
           placeholderTextColor={Colors.dark.placeholderText}
         />
+        {errors.title ? (
+          <Text
+            style={{
+              color: "#EF4444",
+              fontSize: 12,
+              fontWeight: "500",
+              marginTop: 6,
+            }}
+          >
+            {errors.title}
+          </Text>
+        ) : null}
       </View>
       <DropDownMenu
         category={category}
@@ -100,7 +132,10 @@ export default function addNote() {
       />
       <TextInput
         value={description}
-        onChangeText={setDescription}
+        onChangeText={(val) => {
+          setDescription(val);
+          if (errors.description) setErrors((e) => ({ ...e, description: "" }));
+        }}
         placeholder="Write your note..."
         placeholderTextColor="#777"
         style={{
@@ -110,10 +145,26 @@ export default function addNote() {
           padding: 15,
           color: Colors.dark.text,
           fontSize: 16,
+          borderWidth: 1,
+          borderColor: errors.description
+            ? "rgba(239,68,68,0.6)"
+            : "transparent",
         }}
         multiline
         textAlignVertical="top"
       />
+      {errors.description ? (
+        <Text
+          style={{
+            color: "#EF4444",
+            fontSize: 12,
+            fontWeight: "500",
+            marginTop: 6,
+          }}
+        >
+          {errors.description}
+        </Text>
+      ) : null}
     </SafeAreaView>
   );
 }

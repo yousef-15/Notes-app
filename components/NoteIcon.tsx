@@ -1,11 +1,13 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function NoteIcon({
   noteIcon,
+  color,
 }: {
   noteIcon: keyof typeof Ionicons.glyphMap;
+  color: string | undefined;
 }) {
   return (
     <View
@@ -15,10 +17,10 @@ export default function NoteIcon({
         borderRadius: 5,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "rgba(34,197,94,0.1)",
+        backgroundColor: color + "33",
       }}
     >
-      <Ionicons size={22} name={noteIcon} color="rgba(34,197,94,0.6)" />
+      <Ionicons size={22} name={noteIcon} color={color} />
     </View>
   );
 }

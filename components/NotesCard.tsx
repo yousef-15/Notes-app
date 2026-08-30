@@ -2,12 +2,17 @@ import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { Notes } from "@/constants/notes";
 import { Colors } from "@/constants/theme";
-import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import NoteIcon from "./NoteIcon";
 import PinnedIcon from "./PinnedIcon";
+import { categories } from "@/constants/notesData";
 
 export default function NotesCard({ noteDetails }: { noteDetails: Notes }) {
+  const categoryColor = categories.find(
+    (categ) => categ.name === noteDetails.category.name,
+  );
+  // console.log(categoryColor);
+
   return (
     <Pressable
       style={({ pressed }) => ({
@@ -25,7 +30,10 @@ export default function NotesCard({ noteDetails }: { noteDetails: Notes }) {
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <View style={{ marginBottom: 8 }}>
-          <NoteIcon noteIcon={noteDetails.icon} />
+          <NoteIcon
+            noteIcon={noteDetails.category.icon}
+            color={categoryColor?.color}
+          />
         </View>
         {noteDetails?.pinned && <PinnedIcon />}
       </View>

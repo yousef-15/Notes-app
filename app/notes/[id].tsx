@@ -1,3 +1,4 @@
+import { categories } from "@/constants/notesData";
 import { Colors } from "@/constants/theme";
 import { useNotes } from "@/context/NotesContext";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,6 +10,9 @@ export default function NotesDetails() {
   const { id } = useLocalSearchParams();
   const { notes, togglePinned, deleteNote } = useNotes();
   const note = notes.find((n: any) => n.id === Number(id));
+  const categoryColor = categories.find(
+    (categ) => categ.name === note.category.name,
+  );
   return (
     <SafeAreaView
       style={{
@@ -82,23 +86,6 @@ export default function NotesDetails() {
           >
             <Ionicons
               size={21}
-              name="attach"
-              color={Colors.dark.secondaryText}
-            />
-          </Pressable>
-
-          <Pressable
-            style={{
-              width: 42,
-              height: 42,
-              borderRadius: 12,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(255,255,255,0.05)",
-            }}
-          >
-            <Ionicons
-              size={21}
               name="create-outline"
               color={Colors.dark.secondaryText}
             />
@@ -119,13 +106,17 @@ export default function NotesDetails() {
             borderRadius: 18,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "rgba(34,197,94,0.10)",
+            backgroundColor: categoryColor?.color + "33",
             borderWidth: 1,
-            borderColor: "rgba(34,197,94,0.35)",
+            borderColor: categoryColor?.color + "33",
             marginBottom: 18,
           }}
         >
-          <Ionicons size={38} name={note?.icon} color="#22C55E" />
+          <Ionicons
+            size={38}
+            name={note?.category.icon}
+            color={categoryColor?.color}
+          />
         </View>
 
         <Text
@@ -153,17 +144,17 @@ export default function NotesDetails() {
               paddingHorizontal: 12,
               paddingVertical: 7,
               borderRadius: 10,
-              backgroundColor: "rgba(34,197,94,0.10)",
+              backgroundColor: categoryColor?.color + "33",
             }}
           >
             <Text
               style={{
-                color: "#22C55E",
+                color: categoryColor?.color,
                 fontWeight: "700",
                 fontSize: 13,
               }}
             >
-              {note?.category}
+              {note?.category.name}
             </Text>
           </View>
 

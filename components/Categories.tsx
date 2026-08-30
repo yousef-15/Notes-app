@@ -1,10 +1,12 @@
-import { View, Text, Pressable } from "react-native";
+import { Text, Pressable } from "react-native";
 import React from "react";
 import { Colors } from "@/constants/theme";
+import { router } from "expo-router";
 
 export default function Categories({ categoryName }: { categoryName: string }) {
   return (
     <Pressable
+      onPress={() => router.push(`/notes/category/${categoryName}`)}
       style={({ pressed }) => ({
         backgroundColor: pressed ? "#1d232b" : "#171b21be",
         width: "auto",
