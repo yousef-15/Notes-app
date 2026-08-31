@@ -18,15 +18,17 @@ export default function CategoryNotesButton({
     <Pressable
       onPress={() => router.push(`../category/${name}`)}
       style={({ pressed }) => ({
-        height: 60,
-        borderRadius: 10,
-        backgroundColor: pressed ? "#161a1f" : "#171b21be",
-        paddingVertical: 10,
-        paddingHorizontal: 10,
+        height: 64,
+        borderRadius: 14,
+        backgroundColor: pressed ? "#1e242d" : "#181d24",
+        paddingVertical: 12,
+        paddingHorizontal: 14,
         transform: [{ scale: pressed ? 0.98 : 1 }],
-        marginBottom: 3,
+        marginBottom: 8,
         flexDirection: "row",
         alignItems: "center",
+        borderWidth: 1,
+        borderColor: "rgba(255,255,255,0.06)",
       })}
     >
       <View
@@ -37,13 +39,24 @@ export default function CategoryNotesButton({
           justifyContent: "space-between",
         }}
       >
-        <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+        <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
           <NoteIcon noteIcon={icon} color={color} />
-          <Text style={{ fontSize: 16, color: Colors.dark.text }}>{name}</Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "600",
+              color: Colors.dark.text,
+              letterSpacing: -0.1,
+            }}
+          >
+            {name}
+          </Text>
         </View>
-        <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-          <Ionicons size={21} name="chevron-forward" color={Colors.dark.text} />
-        </View>
+        <Ionicons
+          size={20}
+          name="chevron-forward"
+          color={Colors.dark.disabledText}
+        />
       </View>
     </Pressable>
   );

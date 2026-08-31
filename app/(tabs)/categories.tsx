@@ -7,16 +7,33 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Categories() {
   const allCategories = categories;
   return (
-    <SafeAreaView style={{ flex: 1, padding: 10 }}>
-      <View style={{ flexDirection: "row", marginBottom: 20 }}>
+    <SafeAreaView style={{ flex: 1, paddingHorizontal: 16 }}>
+      <View style={{ marginBottom: 24 }}>
         <Text
-          style={{ fontSize: 24, fontWeight: "600", color: Colors.dark.text }}
+          style={{
+            color: Colors.dark.disabledText,
+            fontSize: 12,
+            fontWeight: "600",
+            marginBottom: 2,
+            letterSpacing: 0.5,
+            textTransform: "uppercase",
+          }}
+        >
+          Browse
+        </Text>
+        <Text
+          style={{
+            fontSize: 26,
+            fontWeight: "800",
+            color: Colors.dark.text,
+            letterSpacing: -0.5,
+          }}
         >
           Categories
         </Text>
       </View>
-      <ScrollView>
-        <View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{ paddingBottom: 30 }}>
           {allCategories.map((categ) => (
             <CategoryNotesButton
               key={categ.name}

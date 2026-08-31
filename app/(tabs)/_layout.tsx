@@ -9,18 +9,22 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors["dark"].tint,
-        tabBarInactiveTintColor: Colors["dark"].icon,
+        tabBarInactiveTintColor: Colors["dark"].disabledText,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#171b21be",
-          height: 75,
-          borderTopWidth: 0,
+          backgroundColor: "#13171e",
+          height: 72,
+          borderTopWidth: 1,
+          borderTopColor: "rgba(255,255,255,0.07)",
         },
         tabBarItemStyle: {
           paddingVertical: 8,
         },
         tabBarLabelStyle: {
-          marginTop: 3,
+          marginTop: 2,
+          fontSize: 11,
+          fontWeight: "600",
+          letterSpacing: 0.2,
         },
       }}
     >

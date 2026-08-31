@@ -26,6 +26,7 @@ export default function RootLayout() {
             name="category/[name]"
             options={{ headerShown: false }}
           />
+          <Stack.Screen name="notes/editNote" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="auto" />
       </NotesProvider>

@@ -1,39 +1,44 @@
-import { StyleSheet } from "react-native";
 import { Colors } from "@/constants/theme";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   outerContainer: {
     flexDirection: "column",
-    marginBottom: 20,
+    marginBottom: 16,
   },
   text: {
     color: Colors.dark.text,
-    fontSize: 25,
-    fontWeight: "bold",
+    fontSize: 26,
+    fontWeight: "800",
+    letterSpacing: -0.5,
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 15,
+    alignItems: "center",
+    marginBottom: 18,
+    marginTop: 4,
   },
   dateContainer: {
     flexDirection: "column",
     alignItems: "flex-end",
+    gap: 2,
   },
   day: {
     color: Colors.dark.disabledText,
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
   searchBarContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 10,
-    backgroundColor: "#171b21be",
+    gap: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    borderRadius: 14,
+    backgroundColor: "#181d24",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.06)",
+    borderColor: "rgba(255,255,255,0.07)",
   },
 });

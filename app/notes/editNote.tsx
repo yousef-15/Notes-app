@@ -3,7 +3,7 @@ import { categories } from "@/constants/notesData";
 import { Colors } from "@/constants/theme";
 import { useNotes } from "@/context/NotesContext";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -16,13 +16,17 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function AddNote() {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Personal");
-  const [description, setDescription] = useState("");
+export default function EditNote() {
+  const { id } = useLocalSearchParams();
+  const { notes, editNote } = useNotes();
+  const note = notes.find((n: any) => n.id === Number(id));
+
+  const [title, setTitle] = useState(note?.title ?? "");
+  const [category, setCategory] = useState(note?.category?.name ?? "Personal");
+  const [description, setDescription] = useState(note?.description ?? "");
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState({ title: "", description: "" });
-  const { addNote } = useNotes();
+
   const iconName = categories.find(
     (n) => n.name.toLowerCase() === category.toLowerCase(),
   )?.icon;
@@ -35,31 +39,21 @@ export default function AddNote() {
       setErrors(newErrors);
       return;
     }
-    addNote({
-      id: Date.now(),
+
+    editNote({
+      id: note.id,
       title,
       description,
       category: { name: category, icon: iconName },
-      time:
-        new Date().toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        }) +
-        " · " +
-        new Date().toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      pinned: false,
+      time: note.time,
+      pinned: note.pinned,
     });
+
     router.back();
   };
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#0F1115" }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#0F1115" }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -106,7 +100,7 @@ export default function AddNote() {
                 letterSpacing: -0.2,
               }}
             >
-              New Note
+              Edit Note
             </Text>
 
             <Pressable
