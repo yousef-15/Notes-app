@@ -3,16 +3,31 @@ import Categories from "@/components/Categories";
 import GreetingHeader from "@/components/GreetingHeader";
 import NotesCard from "@/components/NotesCard";
 import SearchBar from "@/components/SearchBar";
+import { Notes } from "@/constants/notes";
 import { categories, notes } from "@/constants/notesData";
 import { useNotes } from "@/context/NotesContext";
 import { styles } from "@/styles/styles";
-import { useState } from "react";
+import { getNotes, saveNotes } from "@/utils/storage";
+import { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
-  const { notes } = useNotes();
+  const { notes, setNotes } = useNotes();
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const loadNotes = async () => {
+      const storedNotes = await getNotes();
+      setNotes(storedNotes);
+    };
+
+    loadNotes();
+  }, []);
+
+  useEffect(() => {
+    saveNotes(notes);
+  }, [notes]);
 
   const filteredNotes = notes.filter((note: any) =>
     note.title.toLowerCase().includes(search.toLowerCase()),

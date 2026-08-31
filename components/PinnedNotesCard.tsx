@@ -6,12 +6,16 @@ import { Colors } from "@/constants/theme";
 import { StyleSheet } from "react-native";
 import PinnedIcon from "./PinnedIcon";
 import { router } from "expo-router";
+import { categories } from "@/constants/notesData";
 
 export default function PinnedNotesCard({
   noteDetails,
 }: {
   noteDetails: Notes;
 }) {
+  const categoryColor = categories.find(
+    (categ) => categ.name === noteDetails.category.name,
+  );
   return (
     <Pressable
       onPress={() => router.push(`/notes/${noteDetails.id}`)}
@@ -28,7 +32,10 @@ export default function PinnedNotesCard({
         gap: 10,
       })}
     >
-      <NoteIcon noteIcon={noteDetails.icon} />
+      <NoteIcon
+        noteIcon={noteDetails.category.icon}
+        color={categoryColor?.color}
+      />
       <View style={{ flex: 1, minWidth: 0 }}>
         <Text style={styles.title}>{noteDetails.title}</Text>
         <View
@@ -39,7 +46,7 @@ export default function PinnedNotesCard({
             marginBottom: 10,
           }}
         >
-          <Text style={styles.time_cat}>{noteDetails.category}</Text>
+          <Text style={styles.time_cat}>{noteDetails.category.name}</Text>
           <Text style={styles.time_cat}>{noteDetails.time}</Text>
         </View>
         <Text ellipsizeMode="tail" numberOfLines={2} style={styles.desc}>
